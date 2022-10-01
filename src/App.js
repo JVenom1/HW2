@@ -174,6 +174,7 @@ class App extends React.Component {
     loadList = (key) => {
         let newCurrentList = this.db.queryGetList(key);
         this.canAddSong = true;
+        
         this.setState(prevState => ({
             listKeyPairMarkedForDeletion : prevState.listKeyPairMarkedForDeletion,
             currentList: newCurrentList,
@@ -316,7 +317,6 @@ class App extends React.Component {
     }
     editSong = () => {//on confirm
         let list = this.state.currentList;
-        //"title-text" "artist-text" "youTubeId-text"
         let title = document.getElementById("title-text").value;
         let artist = document.getElementById("artist-text").value;
         let youTubeId = document.getElementById("youTubeId-text").value;
@@ -324,12 +324,11 @@ class App extends React.Component {
         list.songs[index].title = title;
         list.songs[index].artist = artist;
         list.songs[index].youTubeId = youTubeId;
-
+        
         this.hideEditSongModal();
         this.setStateWithUpdatedList(list);
     }
     removeSong = () => {
-        console.log(this.song)
         let list = this.state.currentList;
         let id = this.findSongId();
         
@@ -344,7 +343,6 @@ class App extends React.Component {
             if (songs[i].youTubeId === this.song.youTubeId){
                 return i;
             }
-            
         }
         return null;
     }
@@ -378,10 +376,15 @@ class App extends React.Component {
                     undoCallback={this.undo}
                     redoCallback={this.redo}
                     closeCallback={this.closeCurrentList}
+
                     addSongCallback={this.addSong}
                     
                 />
                 <PlaylistCards
+                    canAddSong={canAddSong}
+                    canUndo={canUndo}
+                    canRedo={canRedo}
+                    canClose={canClose}
                     showDeleteSongCallback={this.showDeleteSongModal}
                     showEditSongCallback = {this.showEditSongModal}
                     currentList={this.state.currentList}

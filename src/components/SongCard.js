@@ -54,6 +54,7 @@ export default class SongCard extends React.Component {
         // ASK THE MODEL TO MOVE THE DATA
         this.props.moveCallback(sourceId, targetId);
     }
+    
     handleDoubleClick = (event) => {
         if (event.detail === 2) {
             const { song } = this.props;
